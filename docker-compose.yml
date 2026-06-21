@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    container_name: docker-project-app
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:15
+    container_name: docker-project-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: docker-project-redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
